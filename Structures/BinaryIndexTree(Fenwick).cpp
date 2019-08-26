@@ -36,17 +36,45 @@ using namespace std;
 	We can iterate over them by adding 1 to the least significant bit.
 */
 
-int biggest_value = 100001;
-vector <int> BIT (biggest_value + 1, 0);	
-
-int GetFrequency (int index)
+template <typename T>
+class BIT 
 {
-	int frequency = 0;
-	for (; index; index -= index & (-index)) frequency += BIT[index];
-	return frequency;
-}
+	vector <T> BIT;
+	int maximum_element;
 
-void UpdateFrequency (int index, int difference)
-{ 
-	for (; index <= biggest_value; index += index & (-index)) BIT[index] += difference;
-}
+	int LowestBit (int number) 
+	{ 
+		return number & (-number);
+	}
+
+	int StripLowestBit (int number)
+	{
+		return number & (number - 1);
+	}
+
+	public:
+
+	// Creates BIT for 1 to size inclusive
+	void Init (int size)
+	{
+		maximum_element = size;
+		BIT.resize (maximum_element + 1);
+	}
+
+	T GetFrequency (int index)
+	{
+		T frequency = 0;
+		for (; index; index = StripLowestBit (index)) frequency += BIT[index];
+		return frequency;
+	}
+
+	T GetFrequency (int start, int finish)
+	{
+		return GetFrequency (finish) - GetFrequency (start - 1);
+	}
+
+	void UpdateFrequency (int index, int difference)
+	{ 
+		for (; index <= maximum_element; index += LowestBit (index)) BIT[index] += difference;
+	}
+};
