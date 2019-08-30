@@ -1,19 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// m > a
-int getExtendedGCD (int a, int m, int* c_a, int* c_m)
+tuple <int, int, int> getExtendedGCD (int a, int m)
 {
-	if(a == 0) 
-	{
-		*c_a = 0; *c_m = 1;
-		return m;
-	} 
-	int c_r, c_a2;
-	int gcd = getExtendedGCD (m % a, a, &c_r, &c_a2);
-  	*c_a = c_a2 - (m / a) * c_r;
-  	*c_m = c_r;
-	return gcd;
+	if (a == 0) return {m, 0, 1};
+	auto [gcd, x, y] = getExtendedGCD (m % a, a);
+	return {gcd, y - (m / a) * x, x};
 }
 
 // With negative a
@@ -29,7 +21,11 @@ int getGCD (int a, int m)
 
 int GetInverse (int a, int m)
 {
-	int c_a, c_m;
-	getExtendedGCD (a, m, &c_a, &c_m);  
-	return (c_a % m + m) % m;  			// To handle negative
+	auto [gcd, x, y] = getExtendedGCD (a, m);  
+	return (x % m + m) % m;  			// To handle negative
+}
+
+int main ()
+{
+	cout << GetInverse (7, 9) << endl;
 }
