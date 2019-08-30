@@ -55,6 +55,59 @@ class DisjointSet
 	}
 };
 
+// Disjoint set updated by size with size function
+class DisjointSetSize
+{
+	struct DSInfo
+	{
+		int parent, size;
+	};
+
+	vector < DSInfo > DSinfos;
+
+	void Merge (int first_set, int second_set)
+	{
+		if (DSinfos[first_set].size < DSinfos[second_set].size) swap (first_set, second_set);
+		DSinfos[first_set].size += DSinfos[second_set].size;
+		DSinfos[second_set].parent = first_set;
+	}
+
+	int GetSet (int node)
+	{
+		return DSinfos[node].parent == node ? node : DSinfos[node].parent = GetSet (DSinfos[node].parent);
+	}
+
+	public:
+
+	// Initializes disjoint set to handle values up to size inclusive
+	void Init (int size)
+	{
+		DSinfos.resize (size + 1);
+		for (int i = 0; i <= size; i++)
+		{
+			DSinfos[i].parent = i;
+			DSinfos[i].size = 1;
+		}
+	}
+
+	// Joins two elements if they are not already joined
+	void Join (int first, int second)
+	{
+		if (GetSet (first) != GetSet (second)) Merge (GetSet (first), GetSet (second)); 
+	}
+
+	// Returns true if two elements belong together
+	bool Same (int first, int second)
+	{
+		return GetSet (first) == GetSet (second);
+	}
+
+	int GetSize (int node)
+	{
+		return DSinfos [GetSet (node)].size;
+	}
+};
+
 int main()
 {
 	DisjointSet ds;
