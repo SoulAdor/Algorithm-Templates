@@ -56,7 +56,7 @@ struct segtree
 		return (start == finish) ? UpdateFn (ans, segtree[start]) : ans;
 	}
 
-	void Destroy ()
+	void Clear ()
 	{
 		segtree.clear();
 	}
