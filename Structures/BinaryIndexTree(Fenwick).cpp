@@ -77,4 +77,10 @@ class BIT
 	{ 
 		for (; index <= maximum_element; index += LowestBit (index)) BIT[index] += difference;
 	}
+	
+	void Clear ()
+	{
+		maximum_element = 0;
+		BIT.clear();
+	}
 };
