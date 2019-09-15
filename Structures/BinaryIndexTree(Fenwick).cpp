@@ -61,6 +61,7 @@ class BIT
 		BIT.resize (maximum_element + 1);
 	}
 
+	// Returns sum of values from 1 to index inclusive
 	T GetFrequency (int index)
 	{
 		T frequency = 0;
@@ -68,16 +69,19 @@ class BIT
 		return frequency;
 	}
 
+	// Returns sum of values from start to finish inclusive
 	T GetFrequency (int start, int finish)
 	{
 		return GetFrequency (finish) - GetFrequency (start - 1);
 	}
 
+	// Adds difference to the value at position index
 	void UpdateFrequency (int index, int difference)
 	{ 
 		for (; index <= maximum_element; index += LowestBit (index)) BIT[index] += difference;
 	}
 	
+	// Clears the BIT
 	void Clear ()
 	{
 		maximum_element = 0;
