@@ -26,7 +26,7 @@ void In()
 	}
 }
 
-void DFS (int id, int parent)
+void DFS (int id, int parent = -1)
 {
 	Node& node = nodes[id];
 	if (node.visited) return;
@@ -41,7 +41,7 @@ void DFS (int id, int parent)
 
 void Solve()
 {
-	DFS (1, 0);
+	DFS (1);
 }
 
 void Out()
