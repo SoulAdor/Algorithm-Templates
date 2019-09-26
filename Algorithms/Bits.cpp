@@ -49,8 +49,8 @@ int LowestBit (int number)
 
 
 /*
-	Number of leading zeroes: 			builtin_clz(x)
-  	Number of trailing zeroes : 		builtin_ctz(x)
+	Number of leading zeroes: 			__builtin_clz(x)
+  	Number of trailing zeroes : 		__builtin_ctz(x)
   	Number of 1-bits: 					__builtin_popcount(x) 
 	Parity of number: 					__builtin_parity(n)
 */
