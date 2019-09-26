@@ -16,7 +16,7 @@ void In()
 	cin >> n;
 	nodes.resize(n + 1);
 	int start, finish;
-	for (int i = 1; i <= n; i++)
+	for (int i = 1; i < n; i++)
 	{
 		cin >> start >> finish;
 		nodes [start].edges.push_back(finish); 
