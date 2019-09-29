@@ -2,6 +2,24 @@
 using namespace std;
 
 vector <int> subset;
+vector <vector <long long>> C;
+long long mod = 10e9 + 7;
+
+void InitC (int n)
+{
+	C.resize(n + 1);
+	for (int i = 0; i <= n; i++) C[i].resize(n + 1);
+	for (int i = 0; i <= n; i++) 
+		for (int j = 0; j <= n; j++)
+			C[i][j] = -1;
+}
+
+long long GetC (long long n, long long k)
+{
+	if (C[n][k] != -1) return C[n][k];
+	if (k == 0 || n == k) return C[n][k] = 1;
+	return C[n][k] = (GetC(n - 1, k) + GetC(n - 1, k - 1)) % mod;
+}
 
 void Subset ()
 {
