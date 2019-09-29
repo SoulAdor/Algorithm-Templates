@@ -10,8 +10,7 @@ void In()
 {
 	cin >> n;
 	arr.resize(n);
-	for (int i = 0; i < n; i++) 
-		cin >> arr[i];
+	for (int i = 0; i < n; i++) cin >> arr[i];
 }
 
 void Solve()
@@ -26,7 +25,11 @@ void Out()
 
 int main()
 {__
-	In();
-	Solve();
-	Out();
+	int t = 1;
+	while (t--)
+	{
+		In();
+		Solve();
+		Out();
+	}
 }
