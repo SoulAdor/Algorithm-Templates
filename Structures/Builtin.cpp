@@ -165,8 +165,16 @@ int main ()
    }
    cout << endl;
 
+   //  Custom comparator. Change global variables inside GetValue function to gett different compares.
    priority_queue <int, vector <int>, greater<int>> reverse_pq;
-
+   struct Compare { 
+      bool operator()(int first, int second) 
+      {
+         return GetValue(points[first]) < GetValue(points[second]);
+      } 
+   }; 
+ 
+   priority_queue <int, vector<int>, Compare> pq; 
    /*
       10) Policy based set
    */
