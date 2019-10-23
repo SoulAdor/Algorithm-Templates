@@ -1,6 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+int GetRandom (int start, int finish)
+{
+	return rand() % (finish - start + 1) + start;
+}
+
+int GetPivot (std::vector <int>& arr, int start, int finish)
+{
+	return arr[(start + finish) / 2];
+}
+
+// Take pivot from the array.
+// Values in [start, i) <= pivot 
+// Values in (j, finish] >= pivot
+// We want i to be strictly more than j to divide array into smaller parts
+// Can also be used to get element in i'th position without sorting in O(n) if called conditionally in the end
+void QuickSort (std::vector <int>& arr, int start, int finish)
+{
+	if (start >= finish) return;
+	int i = start, j = finish;
+	for (int pivot = GetPivot(arr, start, finish); i <= j; i++, j--)
+	{
+		while (arr[i] < pivot) i++;
+		while (arr[j] > pivot) j--;
+		if (i > j) break;
+		std::swap (arr[i], arr[j]);
+	}
+	QuickSort (arr, start, j);
+	QuickSort (arr, i, finish);
+}
+
 void MergeSort (vector <int> &v)
 {
    if (v.size() <= 1) return;
@@ -21,6 +52,6 @@ int main()
 {
    vector <int> v = {6, 2, 3, 0, 1, 0, 3};
    v = {6, 2, 3, 0, 1, 0, 3};
-   MergeSort (v);
+   QuickSort (v, 0, v.size() - 1);
    for (int x: v) cout << x << " ";
 }
