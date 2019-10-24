@@ -1,12 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-int GetRandom (int start, int finish)
-{
-	return rand() % (finish - start + 1) + start;
-}
-
 int GetPivot (std::vector <int>& arr, int start, int finish)
 {
 	return arr[(start + finish) / 2];
