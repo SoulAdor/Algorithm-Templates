@@ -1,6 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+vector <string> strings;
+std::vector <int> indices;
+const int alphabet_size = 26;
+vector <int> counts[alphabet_size];
+
+// Sorts strings by their index
+// Sorting is done with indices
+void BucketSort (int index)
+{
+	for (int i: indices) counts[strings[i][index] - 'a'].push_back(i);
+	int next = 0;
+	for (auto& vec: counts)
+	{
+		for (int value : vec) indices[next++] = value;
+		vec.clear();
+	}
+}
+
 int GetPivot (std::vector <int>& arr, int start, int finish)
 {
 	return arr[(start + finish) / 2];
