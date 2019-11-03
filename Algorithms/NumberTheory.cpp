@@ -41,6 +41,16 @@ long long GetInverse (long long a, long long m)
 	return Mod(x, m);  			// To handle negative
 }
 
+// Primality check in O(sqrt(n))
+bool IsPrime (int number) 
+{
+	if (number <= 1) return false;
+	int maximum = sqrt(number);
+	for (int i = 2; i <= maximum; i++) 
+		if (number % i == 0) return false; 
+	return true;
+}
+
 int main ()
 {
 	cout << GetInverse (7, 9) << endl;
