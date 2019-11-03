@@ -6,11 +6,12 @@ struct Node
 {
 	vector <int> edges;
 	bool visited = false;
+	bool finished = false;
 };
 
 int n, m;
 vector <Node> nodes;
-bool answer;
+vector <int> cycle;
 
 void In()
 {
@@ -21,34 +22,49 @@ void In()
 	{ 
 		cin >> start >> finish;
 		nodes [start].edges.push_back (finish);
-		nodes [finish].edges.push_back (start);
 	}
 }
 
-// Keeping track of stack tree as we go. To print whole cycle, might use vector instead of set.
-set <int> stk;
-bool FindCycles (int start)
+// Keep track of visited and finished on each node.
+// If we ever get to visited but not finished, we got up the stack.
+// This implementation keeps track of parent id and adds cycle recursively
+// Also works with multiple edges and loops
+// For undirected, any visited and not parent is a cycle
+
+int parent_cycle = 0;
+void FindCycle (int id)
 {
-	if (nodes[start].visited) return false;
-	nodes[start].visited = true;
-	stk.insert (start);
-	for (int end : nodes[start].edges)
+	Node& node = nodes[id];
+	if (node.visited) return;
+
+	node.visited = true;
+
+	for (int child: node.edges)
 	{
-		if (stk.count (end)) return true;
-		else if (FindCycles (end)) return true;
+		if (parent_cycle != 0) break;
+		if (nodes[child].visited && !nodes[child].finished) 
+		{
+			parent_cycle = child;
+			break;
+		}
+		FindCycle (child);
 	}
-	stk.erase (start);
-	return false;
+	if (parent_cycle > 0) cycle.push_back(id);
+	if (parent_cycle == id) parent_cycle = -1;
+
+	node.finished = true;
 }
 
 void Solve()
 {
-	answer = FindCycles (1);
+	for (int i = 1; i <= n; i++)
+		if (parent_cycle == 0) FindCycle (i);
 }
 
 void Out()
 {
-	cout << answer << endl;
+	std::reverse(cycle.begin(), cycle.end());
+	for (int node: cycle) cout << node << " ";
 }
 
 int main()
