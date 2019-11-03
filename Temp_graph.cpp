@@ -32,9 +32,8 @@ void DFS (int id, int parent = -1)
 	if (node.visited) return;
 	node.visited = true;
 
-	for (int child: node.edges)
+	for (int child: node.edges) if (child != parent)
 	{
-		if (child != parent) continue;
 		DFS (child, id);
 	}
 }
