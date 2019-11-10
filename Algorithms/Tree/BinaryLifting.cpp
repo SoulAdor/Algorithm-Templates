@@ -4,14 +4,13 @@ using namespace std;
 
 struct Node
 {
-	int project, depth, in_time, out_time;
+	int depth, in_time, out_time;
 	vector <int> parents;
 	vector <int> edges;
 };
 
 int n;
 vector <Node> nodes;
-vector <vector <int> > projects;
 long long answer;
 
 void In()
