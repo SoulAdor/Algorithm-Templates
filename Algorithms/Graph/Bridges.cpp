@@ -6,17 +6,14 @@ struct Node
 {
 	std::vector <int> edges;
 	bool visited = false;
-	int visit_time;
-	int lowest_time;
+	int depth;
+	int low_depth;
 	int island_id;
 };
 
-int counter = 0;
-int islands = 0;
-
 int n, m;
 std::vector <Node> nodes;
-long long answer;
+int islands;
 
 void In()
 {
@@ -37,11 +34,12 @@ void ResetVisited ()
 	for (Node& node: nodes) node.visited = false;
 }
 
-// If child's lowest time is smaller or equal to parent's visit time, we can go to parent without edge
-bool IsBridge (int parent, int child)
+// If we cannot go higher than node then it is a bridge. 
+// Works for back edges too.
+bool IsBridge (int start, int end)
 {
-	if (nodes[child].visit_time < nodes[parent].visit_time) swap(parent, child);
-	return nodes[child].lowest_time > nodes[parent].visit_time;
+	if (nodes[end].depth < nodes[start].depth) std::swap(start, end);
+	return nodes[end].low_depth > nodes[start].depth;
 }
 
 void FillIslands (int id)
@@ -51,21 +49,22 @@ void FillIslands (int id)
 	node.visited = true;
 
 	node.island_id = islands;
-	for (int child: node.edges)
-		if (!IsBridge(id, child)) FillIslands (child);
+	for (int child: node.edges) if (!IsBridge(id, child)) 
+		FillIslands (child);
 }
 
-void FillTimes (int id, int parent = -1)
+// Count how low can we get from subtree without going up parent edge.
+void FillTimes (int id, int parent = -1, int depth = 0)
 {
 	Node& node = nodes[id];
 	if (node.visited) return;
 	node.visited = true;
 	
-	node.lowest_time = node.visit_time = counter++;
+	node.depth = node.low_depth = depth;
 	for (int child: node.edges) if (child != parent) 
 	{
-		FillTimes (child, id);
-		node.lowest_time = min (node.lowest_time, nodes[child].lowest_time);
+		FillTimes (child, id, depth + 1);
+		node.low_depth = std::min (node.low_depth, nodes[child].low_depth);
 	}
 }
 
@@ -73,7 +72,7 @@ void Solve()
 {
 	for (int i = 1; i <= n; i++) FillTimes (i);
 	ResetVisited ();
-	for (int i = 1; i <= n; i++) if(!nodes[i].visited) 
+	for (int i = 1; i <= n; i++) if (!nodes[i].visited) 
 	{
 		islands++;
 		FillIslands(i);
@@ -82,7 +81,7 @@ void Solve()
 
 void Out()
 {
-	cout << islands << endl;
+	cout << islands << std::endl;
 	for (int i = 1; i <= n; i++)
 		cout << nodes[i].island_id << " ";
 }
