@@ -190,7 +190,7 @@ int main ()
    indexed_s.insert(3);
    indexed_s.insert(7);
    indexed_s.insert(9);
-   // Returns second element in sorted array. O(log(N))
+   // Returns second (third, count starts with 0) element in sorted array. O(log(N))
    auto x = indexed_s.find_by_order(2);
    cout << *x << "\n"; // 7
    // And the function order_of_key returns the position of a given element. O(log(N))
