@@ -45,7 +45,7 @@ int main()
    // lower_bound returns a pointer to the first array element whose value is at least x, or end().
    // upper_bound returns a pointer to the first array element whose value is larger than x, or end().
    // equal_range returns both above pointers.
-   // If there is no such element, the pointer points to the element after the last array element.
+   // If there is no such element, both pointers point to the element where if would fit if we added it to sorted array.
    cout <<  lower_bound (v.begin(), v.end(), 3) - v.begin() << endl;
    cout <<  upper_bound (v.begin(), v.end(), 3) - v.begin() << endl;
    auto r = equal_range(v.begin(), v.end(), 3);
@@ -53,4 +53,7 @@ int main()
    cout << BinarySearch (0,5,3) << "\n";
    cout << FirstTrue (0,5) << "\n";
    cout << LastFalse (0,5) << "\n";
+   cout << *upper_bound (v.begin(), v.end(), 2) << endl;
+   cout << *lower_bound (v.begin(), v.end(), 2) << endl;
+   cout << upper_bound (v.begin(), v.end(), 2) - lower_bound (v.begin(), v.end(), 2) << endl;
 }
