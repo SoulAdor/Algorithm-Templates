@@ -10,4 +10,6 @@ int main()
    cout << fixed;							// Use fixed notaion not scientific one
    cout.precision(3);					// Guaranteed output size (123.123)
    cout << test;
+
+   cout.flush();                    // For interactive problems
 }
