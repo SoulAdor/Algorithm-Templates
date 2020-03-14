@@ -1,54 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Changes bit at position starting from 0
-int SetBit (int number, int position)
+unsigned long long SetBit (unsigned long long number, int position)
 {
-	return number | 1 << position;
+	return number | 1ULL << position;
 }
 
-int GetBit (int number, int position)
+unsigned long long GetBit (unsigned long long number, int position)
 {
-	return number & 1 << position;
+	return number & 1ULL << position;
 }
 
-int ChangeBit (int number, int position)
+unsigned long long ChangeBit (unsigned long long number, int position)
 {
-	return number ^ 1 << position;
+	return number ^ 1ULL << position;
 }
 
-int ClearBit (int number, int position)
+unsigned long long ClearBit (unsigned long long number, int position)
 {
-	return number & !(1 << position);
+	return number & !(1ULL << position);
 }
 
-int StripLowestBit (int number)
+unsigned long long StripLowestBit (unsigned long long number)
 {
 	return number & (number - 1);
 }
 
-bool PowerOfTwo (int number)
+bool PowerOfTwo (unsigned long long number)
 { 
 	return number && !StripLowestBit (number);
 }
 
-int HighestBitPosition (int number) 
-{ 
-	return log2 (number);
+int HighestBitPosition (unsigned long long number) 
+{
+	return 63 - __builtin_clzll(number);
 }
 
-int HighestBit (int number) 
+unsigned long long HighestBit (unsigned long long number) 
 { 
-	return 1 << HighestBitPosition (number);
+	return 1ULL << HighestBitPosition (number);
 }
 
-int LowestBit (int number) 
-{ 
-	return number & (-number);
+int LowestBitPosition (unsigned long long number) 
+{
+	return __builtin_ctzll(number);
+}
+
+int LowestBit (unsigned long long number) 
+{
+	return 1ULL << LowestBitPosition (number);
 }
 
 
 /*
+   // All take unsigned values as arguments
+   // Add ll to the end for long longs : __builtin_clzll(x)
+
 	Number of leading zeroes: 			__builtin_clz(x)
   	Number of trailing zeroes : 		__builtin_ctz(x)
   	Number of 1-bits: 					__builtin_popcount(x) 
