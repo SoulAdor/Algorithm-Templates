@@ -48,8 +48,11 @@ int main()
    // If there is no such element, both pointers point to the element where if would fit if we added it to sorted array.
    cout <<  lower_bound (v.begin(), v.end(), 3) - v.begin() << endl;
    cout <<  upper_bound (v.begin(), v.end(), 3) - v.begin() << endl;
-   auto r = equal_range(v.begin(), v.end(), 3);
-   cout << "Number of elements: " << r.second - r.first << "\n";
+   auto range = equal_range(v.begin(), v.end(), 3);
+   cout << "Number of equal elements: " << range.second - range.first << "\n";
+   cout << "Number of less elements: " << range.first - v.begin() << "\n";
+   cout << "Number of less of equal elements: " << range.second - v.begin() << "\n";
+
    cout << BinarySearch (0,5,3) << "\n";
    cout << FirstTrue (0,5) << "\n";
    cout << LastFalse (0,5) << "\n";
