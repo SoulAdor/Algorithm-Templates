@@ -7,3 +7,7 @@ struct P
       else return y < p.y;
    }
 };
+
+bool CompareNodes (const P& l, P const& r) {
+   return l.x < r.x;
+}
