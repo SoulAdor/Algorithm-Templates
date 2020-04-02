@@ -7,11 +7,10 @@ long long mod = 1e9 + 7;
 long long ModPow (long long num, long long pow)
 {
 	if (pow == 0) return 1;
-	long long mid = ModPow (num, pow / 2);
-	mid *= mid;
-	mid %= mod;
-	if (pow % 2) mid *= num;
-	return mid %= mod;
+	long long res = ModPow (num, pow / 2);
+	res = (res * res) % mod;
+	if (pow % 2) res = (res * num) % mod;
+	return res;
 }
 
 // Usual greatest common divisor
