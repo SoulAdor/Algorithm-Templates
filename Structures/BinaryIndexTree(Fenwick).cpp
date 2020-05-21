@@ -7,8 +7,8 @@ using namespace std;
 	Update 	O(log(n))
 
 	Current implementation starts with 1 on array.
-	For each value, we store sum of n values stored in consecutive less than it.
-	N = 2 ^ r, where r is number of consecutive least significant zeroes in binary representation of number
+	For each value, we store sum of n values stored in consecutive values less and equal than it.
+	Length is N = 2 ^ r, where r is number of consecutive least significant zeroes in binary representation of number
 	Or number of times we can divide the number by 2 without any remainder.
 
 	Example: 
@@ -40,7 +40,7 @@ template <typename T>
 class BIT 
 {
 	vector <T> BIT;
-	int maximum_element;
+	int maximum_element, highest_bit;
 
 	int LowestBit (int number) 
 	{ 
@@ -52,6 +52,16 @@ class BIT
 		return number & (number - 1);
 	}
 
+	int HighestBitPosition (unsigned long long number) 
+	{
+		return 63 - __builtin_clzll(number);
+	}
+
+	unsigned long long HighestBit (unsigned long long number) 
+	{ 
+		return 1ULL << HighestBitPosition (number);
+	}
+
 	public:
 
 	// Creates BIT for 1 to size inclusive
@@ -59,6 +69,24 @@ class BIT
 	{
 		maximum_element = size;
 		BIT.resize (maximum_element + 1);
+		highest_bit = HighestBit (maximum_element);
+	}
+
+	// Returns first index with sum more or equal than given, if sum is monotonic (all elements >= 0)
+	// Works in O(log(N)) time
+	int GetKthFrequency (T sum)
+	{
+		int index = 0;
+		for (int i = highest_bit; i; i /= 2) if (i + index <= maximum_element)
+		{
+			T value = BIT[i + index];
+			if (value < sum)
+			{
+				sum -= BIT[i + index];
+				index += i;
+			}
+		}
+		return index + 1;
 	}
 
 	// Returns sum of values from 1 to index inclusive
