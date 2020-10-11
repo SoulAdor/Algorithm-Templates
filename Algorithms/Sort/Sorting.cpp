@@ -53,6 +53,25 @@ void MergeSort (vector <int> &v)
       v[i] = r == right.size() || (l != left.size() && left[l] <= right[r]) ? left[l++] : right[r++];
 }
 
+long long MergeSortInversions (vector <int> &v)
+{
+   if (v.size() <= 1) return 0;
+	long long result = 0;
+   vector <int> left (v.begin(), v.begin() + v.size() / 2); result += MergeSortInversions (left);
+   vector <int> right (v.begin() + v.size() / 2, v.end());  result += MergeSortInversions (right);
+   for (int i = 0, l = 0, r = 0; i < v.size(); i++)
+   {
+		if (r == right.size()) v[i] = left[l++];
+		else if (l != left.size() && left[l] <= right[r]) v[i] = left[l++];
+		else 
+		{
+			v[i] = right[r++];
+			result += left.size() - l;
+		}
+	}
+	return result;
+}
+
 void InsertionSort (vector <int>& v)
 {
    for (int i = 0; i < v.size(); i++)
