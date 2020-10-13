@@ -40,6 +40,20 @@ long long LastFalse (long long start, long long finish)
    return start;
 }
 
+long long FindSmallest (long long start, long long finish, long long value)
+{
+	if (start == finish) return start;
+	long long middle = (start + finish) / 2;
+	return Check (middle) ? FindSmallest (start, middle, value) : FindSmallest (middle + 1, finish, value);
+}
+
+long long FindBiggest (long long start, long long finish, long long value)
+{
+	if (start == finish) return start;
+	long long middle = (start + finish + 1) / 2;
+	return Check (middle) <= value ? FindBiggest (middle, finish, value) : FindBiggest (start, middle - 1, value);
+}
+
 int main()
 { 
    // lower_bound returns a pointer to the first array element whose value is at least x, or end().
